@@ -31,3 +31,13 @@ type BranchResponse struct {
 	Phone    string `json:"phone"`
 	Timezone string `json:"timezone"`
 }
+
+type RoleResponse struct {
+	Id   int    `json:"id"`
+	Name string `json:"name"`
+}
+
+type CategoryResponse struct {
+	Id   int    `json:"id"`
+	Name string `json:"name"`
+}
