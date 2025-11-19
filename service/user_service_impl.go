@@ -37,7 +37,7 @@ func (u UserServiceImpl) FindAll() (users []response.UserResponse, err error) {
 			Name:         value.Name,
 			Email:        value.Email,
 			Password:     value.Password,
-			Role:         value.Role,
+			Role_id:      value.Role_id,
 			Phone_number: value.Phone_number,
 			Branch_id:    value.Branch_id,
 		}
@@ -57,7 +57,7 @@ func (u *UserServiceImpl) FindById(userId int) (user response.UserResponse, err 
 		Name:         data.Name,
 		Email:        data.Email,
 		Password:     data.Password,
-		Role:         data.Role,
+		Role_id:      data.Role_id,
 		Phone_number: data.Phone_number,
 		Branch_id:    data.Branch_id,
 	}
@@ -75,7 +75,7 @@ func (u *UserServiceImpl) Create(user request.CreateUserRequest) (err error) {
 		Name:         user.Name,
 		Email:        user.Email,
 		Password:     user.Password,
-		Role:         user.Role,
+		Role_id:      user.Role_id,
 		Phone_number: user.Phone_number,
 		Branch_id:    user.Branch_id,
 	}
@@ -94,7 +94,7 @@ func (u *UserServiceImpl) Update(user request.UpdateUserRequest) (err error) {
 	data.Name = user.Name
 	data.Email = user.Email
 	data.Password = user.Password
-	data.Role = user.Role
+	data.Role_id = user.Role_id
 	data.Phone_number = user.Phone_number
 	data.Branch_id = user.Branch_id
 	u.UserRepository.Update(data)

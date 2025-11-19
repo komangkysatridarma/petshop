@@ -50,7 +50,7 @@ func (u *UserRepositoryImpl) Update(user model.User) error {
 		Name:         user.Name,
 		Email:        user.Email,
 		Password:     user.Password,
-		Role:         user.Role,
+		Role_id:      user.Role_id,
 		Phone_number: user.Phone_number,
 		Branch_id:    user.Branch_id,
 	}

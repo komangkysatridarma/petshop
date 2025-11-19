@@ -20,6 +20,9 @@ func main() {
 
 	// Repository
 	userRepository := repository.NewUserRepositoryImpl(db)
+	branchRepository := repository.NewBranchRepositoryImpl(db)
+	roleRepository := repository.NewRoleRepositoryImpl(db)
+	categoryRepository := repository.NewCategoryRepositoryImpl(db)
 
 	// Services
 	userService, err := service.NewUserServiceImpl(userRepository, validate)
@@ -28,12 +31,29 @@ func main() {
 	}
 	authService := service.NewAuthService(userRepository)
 
+	branchService, err := service.NewBranchServiceImpl(branchRepository, validate)
+	if err != nil {
+		log.Fatalf("Error initializing Branch service: %v", err)
+	}
+
+	roleService := service.NewRoleServiceImpl(roleRepository, validate)
+	categoryService := service.NewCategoryServiceImpl(categoryRepository, validate)
+
 	// Controllers
 	userController := controller.NewUserController(userService)
 	authController := controller.NewAuthController(authService)
+	branchController := controller.NewBranchController(branchService)
+	roleController := controller.NewRoleController(roleService)
+	categoryController := controller.NewCategoryController(categoryService)
 
 	// Router
-	routes := router.UserRouter(userController, authController)
+	routes := router.SetupRouter(
+		authController,
+		userController,
+		branchController,
+		roleController,
+		categoryController,
+	)
 
 	server := &http.Server{
 		Addr:           ":8888",

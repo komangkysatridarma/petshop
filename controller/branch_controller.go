@@ -14,6 +14,10 @@ type BranchController struct {
 	branchService service.BranchService
 }
 
+func NewBranchController(service service.BranchService) *BranchController {
+	return &BranchController{branchService: service}
+}
+
 func (controller BranchController) FindAll(ctx *gin.Context) {
 	data, err := controller.branchService.FindAll()
 
@@ -59,7 +63,7 @@ func (controller *BranchController) FindById(ctx *gin.Context) {
 
 func (controller *BranchController) Create(ctx *gin.Context) {
 	req := request.CreateBranchRequest{}
-	ctx.ShouldBindBodyWithJSON(req)
+	ctx.ShouldBindJSON(&req)
 
 	err := controller.branchService.Create(req)
 
@@ -74,18 +78,18 @@ func (controller *BranchController) Create(ctx *gin.Context) {
 	res := response.Response{
 		Code:   200,
 		Status: "Ok",
-		Data:   nil,
+		Data:   req,
 	}
 	ctx.JSON(http.StatusOK, res)
 }
 
-func (controller *BranchController) Update(ctx *gin.Context){
+func (controller *BranchController) Update(ctx *gin.Context) {
 	req := request.UpdateBranchRequest{}
 	err := ctx.ShouldBindBodyWithJSON(&req)
 
 	if err != nil {
 		ctx.JSON(http.StatusBadRequest, response.ErrorResponse{
-			Code: 400,
+			Code:    400,
 			Message: err.Error(),
 		})
 	}
@@ -95,7 +99,7 @@ func (controller *BranchController) Update(ctx *gin.Context){
 
 	if err != nil {
 		ctx.JSON(http.StatusBadRequest, response.ErrorResponse{
-			Code: 400,
+			Code:    400,
 			Message: "Invalid Id",
 		})
 		return
@@ -106,22 +110,22 @@ func (controller *BranchController) Update(ctx *gin.Context){
 	err = controller.branchService.Update(req)
 	if err != nil {
 		ctx.JSON(http.StatusInternalServerError, response.ErrorResponse{
-			Code: 500,
+			Code:    500,
 			Message: err.Error(),
 		})
 		return
 	}
 
 	res := response.Response{
-		Code: 200,
+		Code:   200,
 		Status: "Ok",
-		Data: req,
+		Data:   req,
 	}
 
 	ctx.JSON(http.StatusOK, res)
 }
 
-func (controller *BranchController) Delete(ctx *gin.Context){
+func (controller *BranchController) Delete(ctx *gin.Context) {
 	branchId := ctx.Param("id")
 	id, err := strconv.Atoi(branchId)
 
@@ -129,7 +133,7 @@ func (controller *BranchController) Delete(ctx *gin.Context){
 
 	if err != nil {
 		ctx.JSON(http.StatusNotFound, response.ErrorResponse{
-			Code: 404,
+			Code:    404,
 			Message: "Id Not Found",
 		})
 		return
@@ -138,16 +142,16 @@ func (controller *BranchController) Delete(ctx *gin.Context){
 	err = controller.branchService.Delete(id)
 	if err != nil {
 		ctx.JSON(http.StatusInternalServerError, response.ErrorResponse{
-			Code: 500,
+			Code:    500,
 			Message: err.Error(),
 		})
 		return
 	}
 
 	res := response.Response{
-		Code: 200,
+		Code:   200,
 		Status: "Ok",
-		Data: nil,
+		Data:   nil,
 	}
 
 	ctx.JSON(http.StatusOK, res)

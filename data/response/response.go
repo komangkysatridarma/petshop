@@ -1,7 +1,5 @@
 package response
 
-import "petshop/enum"
-
 type Response struct {
 	Code   int         `json:"code"`
 	Status string      `json:"status"`
@@ -14,13 +12,13 @@ type ErrorResponse struct {
 }
 
 type UserResponse struct {
-	Id           int           `json:"id"`
-	Name         string        `json:"name"`
-	Email        string        `json:"email"`
-	Password     string        `json:"password"`
-	Role         enum.UserRole `json:"role"`
-	Phone_number string        `json:"phone_number"`
-	Branch_id    int           `json:"branch_id"`
+	Id           int    `json:"id"`
+	Name         string `json:"name"`
+	Email        string `json:"email"`
+	Password     string `json:"password"`
+	Role_id      int    `json:"role_id"`
+	Phone_number string `json:"phone_number"`
+	Branch_id    int    `json:"branch_id"`
 }
 
 type BranchResponse struct {
