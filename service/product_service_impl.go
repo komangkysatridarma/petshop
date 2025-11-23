@@ -1,6 +1,7 @@
 package service
 
 import (
+	"errors"
 	"petshop/data/request"
 	"petshop/data/response"
 	"petshop/model"
@@ -12,6 +13,13 @@ import (
 type ProductServiceImpl struct {
 	ProductRepository repository.ProductRepository
 	Validate          *validator.Validate
+}
+
+func NewProductServiceImpl(productRepository repository.ProductRepository, validate *validator.Validate) ProductService {
+	return &ProductServiceImpl{
+		ProductRepository: productRepository,
+		Validate:       validate,
+	}
 }
 
 func (p *ProductServiceImpl) FindAll() (products []response.ProductResponse, err error) {
@@ -59,6 +67,11 @@ func (p *ProductServiceImpl) Create(product request.CreateProductRequest) (err e
 
 	if err != nil {
 		return err
+	}
+
+	_, err = p.ProductRepository.FindByCode(product.Code)
+	if err == nil {
+		return errors.New("product code already exists")
 	}
 
 	m := model.Product{

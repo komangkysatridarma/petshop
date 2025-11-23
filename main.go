@@ -23,6 +23,7 @@ func main() {
 	branchRepository := repository.NewBranchRepositoryImpl(db)
 	roleRepository := repository.NewRoleRepositoryImpl(db)
 	categoryRepository := repository.NewCategoryRepositoryImpl(db)
+	productRepository := repository.NewProductRepositoryImpl(db)
 
 	// Services
 	userService, err := service.NewUserServiceImpl(userRepository, validate)
@@ -38,6 +39,7 @@ func main() {
 
 	roleService := service.NewRoleServiceImpl(roleRepository, validate)
 	categoryService := service.NewCategoryServiceImpl(categoryRepository, validate)
+	productService := service.NewProductServiceImpl(productRepository, validate)
 
 	// Controllers
 	userController := controller.NewUserController(userService)
@@ -45,6 +47,7 @@ func main() {
 	branchController := controller.NewBranchController(branchService)
 	roleController := controller.NewRoleController(roleService)
 	categoryController := controller.NewCategoryController(categoryService)
+	productController := controller.NewProductController(productService)
 
 	// Router
 	routes := router.SetupRouter(
@@ -53,6 +56,7 @@ func main() {
 		branchController,
 		roleController,
 		categoryController,
+		productController,
 	)
 
 	server := &http.Server{

@@ -36,6 +36,14 @@ func (p *ProductRepositoryImpl) FindById(productId int) (product model.Product, 
 	return product, nil
 }
 
+func (p *ProductRepositoryImpl) FindByCode(code string) (product model.Product, err error) {
+	result := p.Db.Where("code = ?", code).First(&product)
+	if result.Error != nil {
+		return model.Product{}, result.Error
+	}
+	return product, nil
+}
+
 func (p *ProductRepositoryImpl) Save(product model.Product) error {
 	results := p.Db.Create(&product)
 	if results.Error != nil {

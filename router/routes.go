@@ -13,7 +13,7 @@ func SetupRouter(
 	branchController *controller.BranchController,
 	roleController *controller.RoleController,
 	categoryController *controller.CategoryController,
-	// productController *controller.ProductController,
+	productController *controller.ProductController,
 	// purchaseController *controller.PurchaseController,
 ) *gin.Engine {
 	r := gin.Default()
@@ -47,11 +47,11 @@ func SetupRouter(
 		api.PATCH("/categories/:id", categoryController.Update)
 		api.DELETE("/categories/:id", categoryController.Delete)
 
-		// api.GET("/products", productController.FindAll)
-		// api.GET("/products/:id", productController.FindById)
-		// api.POST("/products", productController.Create)
-		// api.PATCH("/products/:id", productController.Update)
-		// api.DELETE("/products/:id", productController.Delete)
+		api.GET("/products", productController.FindAll)
+		api.GET("/products/:id", productController.FindById)
+		api.POST("/products", productController.Create)
+		api.PATCH("/products/:id", productController.Update)
+		api.DELETE("/products/:id", productController.Delete)
 
 		// api.GET("/purchases", purchaseController.FindAll)
 		// api.GET("/purchases/:id", purchaseController.FindById)

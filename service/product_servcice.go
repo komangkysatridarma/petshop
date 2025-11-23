@@ -8,7 +8,7 @@ import (
 type ProductService interface {
 	FindAll() ([]response.ProductResponse, error)
 	FindById(productId int) (response.ProductResponse, error)
-	Create(request.CreateProductRequest) error
-	Update(request.UpdateProductRequest) error
+	Create(product request.CreateProductRequest) error
+	Update(product request.UpdateProductRequest) error
 	Delete(productId int) error
 }
