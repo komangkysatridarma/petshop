@@ -1,5 +1,7 @@
 package response
 
+import "github.com/shopspring/decimal"
+
 type Response struct {
 	Code   int         `json:"code"`
 	Status string      `json:"status"`
@@ -38,4 +40,14 @@ type RoleResponse struct {
 type CategoryResponse struct {
 	Id   int    `json:"id"`
 	Name string `json:"name"`
+}
+
+type ProductResponse struct {
+	Id          int             `json:"id"`
+	Name        string          `json:"name"`
+	Code        string          `json:"code"`
+	Price       decimal.Decimal `json:"price"`
+	Category_id int             `json:"category_id"`
+	Is_service  bool            `json:"is_service"`
+	Track_batch bool            `json:"track_batch"`
 }
